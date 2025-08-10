@@ -1,8 +1,6 @@
 # README — Thai SMS Spam/Scam Analyzer (Colab + Flask + LIME)
 
-โปรเจกต์นี้เป็นโน้ตบุ๊กสำหรับสร้างระบบจำแนกข้อความ SMS ภาษาไทยเป็น 4 กลุ่ม: `OK`, `OTP`, `spam`, `scam` พร้อมอธิบายเหตุผลการทำนายด้วย **LIME** และมีหน้าเว็บ **Flask** ให้ทดสอบแบบอินเตอร์แอคทีฟ
-
-> โค้ดอ้างอิงจากไฟล์โน้ตบุ๊ก: `CSC490-YOLO-FinalProject.ipynb` (ที่คุณแนบไว้ด้านบน)
+โปรเจกต์สำหรับสร้างระบบจำแนกข้อความ SMS ภาษาไทยเป็น 4 กลุ่ม: `OK`, `OTP`, `spam`, `scam` พร้อมอธิบายเหตุผลการทำนายด้วย **LIME** และมีหน้าเว็บ **Flask** ให้ทดสอบแบบอินเตอร์แอคทีฟ
 
 ---
 
@@ -29,7 +27,7 @@
 
 ## การติดตั้ง (บน Colab)
 
-ในโน้ตบุ๊ก มีคำสั่งติดตั้งแพ็กเกจแล้ว:
+มีคำสั่งติดตั้งแพ็กเกจแล้ว :
 
 ```python
 !pip install pythainlp -q
@@ -37,13 +35,13 @@
 !pip install imbalanced-learn -q
 ```
 
-ช่วงท้ายสำหรับเว็บ:
+ช่วงท้ายสำหรับเว็บ :
 
 ```python
 !pip install flask pandas pyngrok pythainlp lime scikit-learn imbalanced-learn -q
 ```
 
-> หมายเหตุ: หากเจอปัญหาเวอร์ชัน ให้รีสตาร์ท runtime แล้วรันใหม่
+> หมายเหตุ : หากเจอปัญหาเวอร์ชัน ให้รีสตาร์ท runtime แล้วรันใหม่
 
 ---
 
@@ -54,7 +52,7 @@
 
 ---
 
-## โฟลว์การทำงานในโน้ตบุ๊ก (สรุป)
+## โฟลว์การทำงานใน Colab (สรุป)
 
 1. **เชื่อม Google Drive** และกำหนดโฟลเดอร์หลัก
 
@@ -95,7 +93,7 @@
 
 ## ไฟล์/อาร์ติแฟกต์ที่บันทึก
 
-บน Drive (ค่าเริ่มต้นจากโน้ตบุ๊ก):
+บน Drive (ค่าเริ่มต้น) :
 
 * `label_encoder.joblib`
 * `final_sms_classifier_production.joblib`
@@ -109,7 +107,7 @@
 
 ## การรันเว็บเดโม่
 
-1. (ในโน้ตบุ๊ก) ติดตั้งและตั้งค่า ngrok (ห้ามฮาร์ดโค้ด token ในงานจริง)
+1. ติดตั้งและตั้งค่า ngrok
 2. สร้าง `templates/index.html`
 3. รัน `app.py` และเชื่อม `ngrok`:
 
@@ -118,39 +116,6 @@
 
 ---
 
-## API (ถ้าจะยิงตรง)
-
-* Endpoint: `POST /predict`
-* Form field: `sms_message=<ข้อความ>`
-
-ตัวอย่าง `curl`:
-
-```bash
-curl -X POST -F "sms_message=บัญชีของคุณถูกระงับ คลิก line.ee/xyz" http://127.0.0.1:5000/predict
-```
-
-ตัวอย่าง Response:
-
-```json
-{
-  "prediction": "scam",
-  "probabilities": [
-    {"label": "scam", "score": 92.31},
-    {"label": "spam", "score": 5.42},
-    {"label": "OTP", "score": 1.12},
-    {"label": "OK", "score": 1.15}
-  ],
-  "reason": "'คำสำคัญ1 : 0.4231', 'คำสำคัญ2 : 0.3110'",
-  "features": {
-    "message_length": 52,
-    "digit_count": 0,
-    "uppercase_ratio": 0.0,
-    "...": "..."
-  }
-}
-```
-
----
 
 ## รายละเอียดฟีเจอร์ที่สกัด (ตัวอย่าง)
 
@@ -194,7 +159,7 @@ curl -X POST -F "sms_message=บัญชีของคุณถูกระง
    ```
 2. **แก้พาธ**:
 
-   * แทนที่ `DRIVE_PROJECT_PATH` ด้วยโฟลเดอร์โลคอล (เช่น `BASE_DIR = Path.cwd()/ "SMS_Scam_Final_Project"`)
+   * แทนที่ `DRIVE_PROJECT_PATH` ด้วยโฟลเดอร์โลคอล (เช่น `BASE_DIR = Path.cwd()/ "SMS_Scam_Project"`)
    * เปลี่ยนทุกการอ้าง `DRIVE_PROJECT_PATH` → `BASE_DIR`
 3. รันบล็อกเทรนในโน้ตบุ๊ก (หรือดัดแปลงเป็นสคริปต์ `.py`)
 4. รันส่วน Flask (`app.py`) → เปิดที่ `http://127.0.0.1:5000`
